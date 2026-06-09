@@ -4,6 +4,8 @@ const app = express();
 const data = [];
 const port = process.env.PORT || 5000;
 
+app.use(express.json());
+
 /** @type {any[]} */
 let posts = [];
 
@@ -17,9 +19,9 @@ app.get("/posts", (req, res) => {
   res.json(data_posts);
 });
 
-app.post(`/posts/create`, (req, res) => {
-  posts = [...posts, ...req.body];
-  res.send("New post created");
+app.post("/posts/create", (req, res) => {
+  console.log(req.body); // doit afficher le JSON
+  res.json({ message: "New post created", data: req.body });
 });
 
 app.listen(port, () => {
