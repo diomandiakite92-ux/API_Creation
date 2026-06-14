@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const app = express();
 // @ts-ignore
 const data = [];
@@ -26,4 +27,7 @@ app.post("/posts/create", (req, res) => {
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
+  mongoose.connect("mongodb://127.0.0.1:27017/database").then(() => {
+    console.log("Connected to MongoDB");
+  });
 });
