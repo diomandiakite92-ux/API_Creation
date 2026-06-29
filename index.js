@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+const Post = require("./models");
 // @ts-ignore
 const data = [];
 const port = process.env.PORT || 5000;
@@ -21,8 +22,14 @@ app.get("/posts", (req, res) => {
 });
 
 app.post("/posts/create", (req, res) => {
-  console.log(req.body); // doit afficher le JSON
-  res.json({ message: "New post created", data: req.body });
+  try {
+    const newPost = new Post(req.body);
+    newPost.save();
+    res.send("Post created successfully");
+  } catch (error) {
+    console.error(error);
+    res.send("Error creating post");
+  }
 });
 
 app.listen(port, () => {

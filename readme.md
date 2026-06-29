@@ -2,10 +2,20 @@
 
 - **express**: framework web pour créer des application web et des serveurs Node.js
 - **nodemon**: utilitaire qui permet de redémarrer automatiquement le serveur à chaque modification des fichiers javascript
+- **MongoDB Node.js Driver**: pilote Node.js pour MongoDB
+- **mongoDB Compass** [télécharger](https://www.mongodb.com/products/tools/compass): interface graphique pour MongoDB
 
 ## Installation :
 
 `npm install`
+
+### MongoDB Node.js Driver [lien](https://www.npmjs.com/package/mongodb)
+
+`npm i mongodb`
+
+### Mongoose [lien](https://mongoosejs.com/)
+
+`npm install mongoose --save`
 
 ## Lancer le projet :
 
