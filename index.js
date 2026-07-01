@@ -36,6 +36,24 @@ app.post("/posts/create", (req, res) => {
   }
 });
 
+app.put("/posts/update/:id", async (req, res) => {
+  try {
+    const query = { _id: req.params.id };
+    const update = req.body;
+
+    const updatedPost = await Post.findOneAndUpdate(query, update);
+
+    if (!updatedPost) {
+      return res.status(404).send("Post not found");
+    }
+
+    res.send("Post updated successfully");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error updating post");
+  }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
   mongoose.connect("mongodb://127.0.0.1:27017/database").then(() => {
