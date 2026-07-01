@@ -9,16 +9,20 @@ const port = process.env.PORT || 5000;
 app.use(express.json());
 
 /** @type {any[]} */
-let posts = [];
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/posts", (req, res) => {
+app.get("/posts", async (req, res) => {
   // @ts-ignore
-  const data_posts = [...posts, ...data];
-  res.json(data_posts);
+  try {
+    const posts = await Post.find({});
+    res.json(posts);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error fetching posts");
+  }
 });
 
 app.post("/posts/create", (req, res) => {
