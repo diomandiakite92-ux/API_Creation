@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 
 const UserSchema = new mongoose.Schema({
   firstName: {
@@ -47,3 +47,7 @@ UserSchema.virtual("fullname").get(function () {
 UserSchema.methods.comparePassword = async function (password) {
   return await bcrypt.compare(password, this.hashedPassword);
 };
+
+module.exports = mongoose.model("User", UserSchema);
+const saltRounds = 10;
+exports.saltRounds = saltRounds;
