@@ -1,7 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const Post = require("./models");
+const router = express.Router();
+const Post = require("./src/models/post");
 // @ts-ignore
 const data = [];
 const port = process.env.PORT || 5000;
