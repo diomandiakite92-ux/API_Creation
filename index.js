@@ -2,12 +2,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const router = express.Router();
+app.use(express.json());
+require("./src/routes")(router);
+require("./src/userroutes")(router);
+app.use("/", router);
 const Post = require("./src/models/post");
 // @ts-ignore
 const data = [];
 const port = process.env.PORT || 5000;
-
-app.use(express.json());
 
 /** @type {any[]} */
 

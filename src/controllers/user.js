@@ -9,6 +9,7 @@ const salt = bcrypt.genSaltSync(saltRounds);
 
 module.exports = {
   async register(req, res) {
+    console.log("BODY REÇU :", req.body);
     try {
       const newUser = await new user(req.body);
       newUser.hashedPassword = bcrypt.hashSync(req.body.password, salt);
@@ -21,23 +22,27 @@ module.exports = {
     }
   },
   async login(req, res) {
-    const user = await user.findOne({ email: req.body.email });
-
     try {
-      if (!user) {
-        res.status(401).json("No user account found");
+      const foundUser = await user.findOne({ email: req.body.email });
+
+      if (!foundUser) {
+        return res.status(401).json("No user account found");
       }
-      const match = user.comparePassword(req.body.password);
+
+      const match = await foundUser.comparePassword(req.body.password);
 
       if (!match) {
-        res.status(401).json("Authentication failed. Invalid user or password");
+        return res
+          .status(401)
+          .json("Authentication failed. Invalid user or password");
       }
+
       return res.json({
         token: jwt.sign(
           {
-            email: user.email,
-            fullName: user.fullName,
-            _id: user._id,
+            email: foundUser.email,
+            fullName: foundUser.fullName,
+            _id: foundUser._id,
           },
           process.env.TOKEN_SECRET,
         ),
